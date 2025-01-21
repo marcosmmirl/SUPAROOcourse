@@ -510,9 +510,16 @@
 </tbody>
 </table>
 <p>I would recommend always using the <code>-l</code> option to make it load up faster. In the latest versions of ROOT, specially if you install it on your own machine, there is an annoying new feature were it will always try to open a browser window whenever you draw stuff. You can disable this by opening root like <code>root -l --web=off [more options] [file]</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">ROOT</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+<p>To list the contents of a file you can use the following command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">root</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="n">_file0</span><span class="o">-&gt;</span><span class="n">ls</span><span class="p">()</span>
+</code></pre></div>
+<p>By default, if you open the root file as before it will rename it to <code>_file0</code>. Alternatively you can do <code>.ls</code>, which is faster. You will see a big list of objects in the file, which are the histograms and trees that were saved in the file. Histograms are saved as TH1F, TH1D, TH2F, TH2D, etc. and trees are saved as TTree.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>From now on I will omit the <code>root[1]</code> header from the commands. </p>
+</div>
+<p>We are interested in exploring the contents of the TTree <code>reco</code>, so we can do the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">reco</span><span class="o">-&gt;</span><span class="n">Show</span><span class="p">()</span>
 </code></pre></div>
 
 
