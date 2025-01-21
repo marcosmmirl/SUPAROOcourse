@@ -513,14 +513,15 @@
 <p>To list the contents of a file you can use the following command:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">root</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="n">_file0</span><span class="o">-&gt;</span><span class="n">ls</span><span class="p">()</span>
 </code></pre></div>
-<p>By default, if you open the root file as before it will rename it to <code>_file0</code>. Alternatively you can do <code>.ls</code>, which is faster. You will see a big list of objects in the file, which are the histograms and trees that were saved in the file. Histograms are saved as TH1F, TH1D, TH2F, TH2D, etc. and trees are saved as TTree.</p>
+<p>By default, if you open the root file as before it will rename it to <code>_file0</code>. Alternatively you can do <code>root[1] .ls</code>, which is faster. You will see a big list of objects in the file, which are the histograms and trees that were saved in the file. Histograms are saved as TH1F, TH1D, TH2F, TH2D, etc. and trees are saved as TTree.</p>
+<p>We are interested in exploring the contents of the TTree called <code>reco</code>, so we can do the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">root</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="n">reco</span><span class="o">-&gt;</span><span class="n">Show</span><span class="p">()</span>
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>From now on I will omit the <code>root[1]</code> header from the commands. </p>
+<p>From now on I will omit the <code>root[1]</code> header from the commands. But remember that these commands will only run in the ROOT interpreter.</p>
 </div>
-<p>We are interested in exploring the contents of the TTree <code>reco</code>, so we can do the following:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">reco</span><span class="o">-&gt;</span><span class="n">Show</span><span class="p">()</span>
-</code></pre></div>
+<p>You will again see a big list of TBranches stored in the TTree</p>
 
 
 
