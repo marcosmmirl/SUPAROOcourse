@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "test.C": "cpp",
+        "iosfwd": "cpp",
+        "vector": "cpp",
+        "ex1Solution.C": "cpp"
+    }
+}
