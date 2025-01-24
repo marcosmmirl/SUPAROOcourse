@@ -48,6 +48,8 @@
     
       <link rel="stylesheet" href="../extra.css">
     
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -321,6 +323,90 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Plotting in ROOT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decorating-the-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decorating the Plot
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting the Style
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ratio-panels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ratio Panels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-types-of-plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other types of plots
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other types of plots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      TProfile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tgraph-and-tgrapherrors" class="md-nav__link">
+    <span class="md-ellipsis">
+      TGraph and TGraphErrors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fitting-in-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fitting in ROOT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2
+    </span>
+  </a>
+  
 </li>
       
     </ul>
@@ -384,6 +470,90 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Plotting in ROOT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decorating-the-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decorating the Plot
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting the Style
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ratio-panels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ratio Panels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-types-of-plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other types of plots
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other types of plots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      TProfile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tgraph-and-tgrapherrors" class="md-nav__link">
+    <span class="md-ellipsis">
+      TGraph and TGraphErrors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fitting-in-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fitting in ROOT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2
+    </span>
+  </a>
+  
 </li>
       
     </ul>
@@ -403,6 +573,377 @@
 
 <h1 id="lecture-2">Lecture 2</h1>
 <h2 id="plotting-in-root">Plotting in ROOT</h2>
+<p>In the previous lecture we have seen how to create a histogram in ROOT. Now we will see how you can modify it a plot it in different ways. Any time you called the <code>Draw()</code> method a new window popped up with the histogram. Internally ROOT was creating a <strong>TCanvas</strong> to draw the histogram. It is more convenient to define the canvas yourself as it allows for more flexibility and the ability to save your histograms as files. Inside a canvas you can have multiple pads, which are the areas where you can draw your histograms, graphs, etc. Below is an example of how to create a canvas with a single (default) pad and draw a histogram in it.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">TH1</span><span class="o">::</span><span class="n">SetDefaultSumw2</span><span class="p">();</span><span class="w"> </span><span class="c1">// Setting the sum of squares of weights to be stored in the histogram</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="c1">// Declaring the TCanvas(&quot;[canvas identifier]&quot;, &quot;[name of canvas]&quot;,  width, height)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">TCanvas</span><span class="w"> </span><span class="o">*</span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TCanvas</span><span class="p">(</span><span class="s">&quot;c1&quot;</span><span class="p">,</span><span class="s">&quot;c1&quot;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">600</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">TH1D</span><span class="w"> </span><span class="o">*</span><span class="n">hist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH1D</span><span class="p">(</span><span class="s">&quot;hist&quot;</span><span class="p">,</span><span class="s">&quot;hist&quot;</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">-3</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="c1">// Filling and Drawing the histogram with a random gaussian distribution centered at 0 with a sigma of 1</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">FillRandom</span><span class="p">(</span><span class="s">&quot;gaus&quot;</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="c1">// Selecting the canvas, this is not necessary if you have only one pad/canvas but it is good practice</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">cd</span><span class="p">();</span><span class="w"> </span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="c1">// Drawing the histogram</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span><span class="w"> </span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="c1">// Updating the canvas, this is not necessary but can solve problems sometimes</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span><span class="w"> </span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="c1">// Saving the canvas as a .png file </span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">SaveAs</span><span class="p">(</span><span class="s">&quot;histogram.png&quot;</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="decorating-the-plot">Decorating the Plot</h3>
+<p>We can further decorate the plot, we can add a <a href="https://root.cern.ch/doc/master/classTLegend.html">TLegend class</a>, change the axis labels, the title, the line color, the fill color, etc (more stuff in <a href="https://root.cern/doc/v628/classTHistPainter.html">THistPainter class</a>). Below is an example of how to do this.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="c1">// [previous code]</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="c1">// Drawing the histogram</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;hist e1&quot;</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="c1">// Adding a legend, declaring the (x,y) position in the canvas TLegend(x1,y1,x2,y2)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="n">TLegend</span><span class="w"> </span><span class="o">*</span><span class="n">legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TLegend</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.48</span><span class="p">,</span><span class="mf">0.9</span><span class="p">);</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="c1">// Entries can be added with the AddEntry([hisotgram identifier], &quot;[name]&quot;, &quot;[line type]&quot;) method, linking it the histogram</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="n">legend</span><span class="o">-&gt;</span><span class="n">AddEntry</span><span class="p">(</span><span class="n">hist</span><span class="p">,</span><span class="s">&quot;Gaussian Distribution&quot;</span><span class="p">,</span><span class="s">&quot;l&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="c1">// Make a transparent and borderless legend, looks better</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="n">legend</span><span class="o">-&gt;</span><span class="n">SetFillStyle</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="n">legend</span><span class="o">-&gt;</span><span class="n">SetBorderSize</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="n">legend</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="c1">// Changing the axis labels</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">GetXaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitle</span><span class="p">(</span><span class="s">&quot;Values&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitle</span><span class="p">(</span><span class="s">&quot;Frequency&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="c1">// Changing the title</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">SetTitle</span><span class="p">(</span><span class="s">&quot;Gaussian Distribution&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">    </span><span class="c1">// Changing the line color</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">SetLineColor</span><span class="p">(</span><span class="n">kRed</span><span class="p">);</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">    </span><span class="c1">// Changing the fill color, the second argument is the transparency</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">SetFillColorAlpha</span><span class="p">(</span><span class="n">kOrange</span><span class="p">);</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="c1">// Updating the canvas, this is not necessary but can solve problems sometimes</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span><span class="w"> </span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="c1">// Saving the canvas as a .png file </span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">SaveAs</span><span class="p">(</span><span class="s">&quot;histogram.png&quot;</span><span class="p">);</span><span class="w">  </span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="setting-the-style">Setting the Style</h3>
+<p>By default ROOT creates a default style that can be accessed via the member of the <a href="https://root.cern.ch/doc/master/classTStyle.html">TStyle class</a>, the gStyle pointer, which has access to the currently active style. This class includes functions to set canvases, pads, lines, markers, axes, etc. You can play around with the built-in ones by setting</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Available values: Classic, Plain, Bold, Video, Pub, Modern (default), ATLAS, BELLE2</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">gROOT</span><span class="o">-&gt;</span><span class="n">SetStyle</span><span class="p">(</span><span class="s">&quot;[style name]&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p>You may also create your onw style and then load it up in your macros. If you come up with something you really like you can save this style as a separate macro and call it from any other macro you create to keep consistency. Here is an example of how you would do this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="c1">// Creating a new style</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">TStyle</span><span class="w"> </span><span class="o">*</span><span class="n">myStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TStyle</span><span class="p">(</span><span class="s">&quot;myStyle&quot;</span><span class="p">,</span><span class="s">&quot;My Style&quot;</span><span class="p">);</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="n">myStyle</span><span class="o">-&gt;</span><span class="n">SetCanvasColor</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="n">myStyle</span><span class="o">-&gt;</span><span class="n">SetPadColor</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="n">myStyle</span><span class="o">-&gt;</span><span class="n">SetLineWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="n">myStyle</span><span class="o">-&gt;</span><span class="n">SetPadTopMargin</span><span class="p">(</span><span class="mf">0.8</span><span class="p">);</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="c1">// [and many more options]</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="n">gROOT</span><span class="o">-&gt;</span><span class="n">SetStyle</span><span class="p">(</span><span class="s">&quot;myStyle&quot;</span><span class="p">);</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="ratio-panels">Ratio Panels</h3>
+<p>When comparing two histograms, adding a ratio plot is sometimes <em>essential</em> to spot problems. If you are comparing real data to simulated one (which is usually always the case in particle physics) they are very useful to spot modelling issues. Below is an example of how to do this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">TH1</span><span class="o">::</span><span class="n">SetDefaultSumw2</span><span class="p">();</span><span class="w"> </span><span class="c1">// Setting the sum of squares of weights to be stored in the histogram</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">gStyle</span><span class="o">-&gt;</span><span class="n">SetOptStat</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Setting the statistics box to be off by default</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="n">gStyle</span><span class="o">-&gt;</span><span class="n">SetOptTitle</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Setting the title box to be off by default</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="c1">// Declaring the TCanvas(&quot;[canvas identifier]&quot;, &quot;[name of canvas]&quot;,  width, height)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="n">TCanvas</span><span class="w"> </span><span class="o">*</span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TCanvas</span><span class="p">(</span><span class="s">&quot;c1&quot;</span><span class="p">,</span><span class="s">&quot;c1&quot;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">600</span><span class="p">);</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="c1">// Declare both pads with TPad(&quot;[pad identifier]&quot;, &quot;[name of pad]&quot;, x1, y1, x2, y2)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="n">TPad</span><span class="w"> </span><span class="o">*</span><span class="n">up</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TPad</span><span class="p">(</span><span class="s">&quot;up&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;up&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="n">TPad</span><span class="w"> </span><span class="o">*</span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TPad</span><span class="p">(</span><span class="s">&quot;low&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;low&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">);</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="c1">// Declare the histograms</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="n">TH1D</span><span class="w"> </span><span class="o">*</span><span class="n">h_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH1D</span><span class="p">(</span><span class="s">&quot;h_model&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Theory Model&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">-3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="n">TH1D</span><span class="w"> </span><span class="o">*</span><span class="n">h_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH1D</span><span class="p">(</span><span class="s">&quot;h_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Observed Data&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">-3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="c1">// Random number generator</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="n">TRandom3</span><span class="w"> </span><span class="o">*</span><span class="n">rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TRandom3</span><span class="p">();</span><span class="w"> </span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="c1">// Fill the histograms with slightly different Gaussian distributions</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">        </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">rand</span><span class="o">-&gt;</span><span class="n">Gaus</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">        </span><span class="n">h_model</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="mf">0.85</span><span class="o">*</span><span class="n">rand</span><span class="o">-&gt;</span><span class="n">Gaus</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span><span class="w"> </span><span class="mf">1.2</span><span class="p">));</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="c1">// Draw both pads</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">cd</span><span class="p">();</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">    </span><span class="n">up</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">    </span><span class="n">low</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">    </span><span class="c1">// Move the the upper pad and change the bottom margin</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">    </span><span class="n">up</span><span class="o">-&gt;</span><span class="n">cd</span><span class="p">();</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">    </span><span class="n">up</span><span class="o">-&gt;</span><span class="n">SetBottomMargin</span><span class="p">(</span><span class="mf">0.05</span><span class="p">);</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="w">    </span><span class="c1">// Draw the histograms and modify the style</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;hist p e x0&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">SetMarkerStyle</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">SetMarkerSize</span><span class="p">(</span><span class="mf">0.7</span><span class="p">);</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">SetMarkerColor</span><span class="p">(</span><span class="n">kBlack</span><span class="p">);</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">SetLineColor</span><span class="p">(</span><span class="n">kBlack</span><span class="p">);</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitle</span><span class="p">(</span><span class="s">&quot;Entries&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitleSize</span><span class="p">(</span><span class="mf">0.045</span><span class="p">);</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitleOffset</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetLabelSize</span><span class="p">(</span><span class="mf">0.04</span><span class="p">);</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="w">    </span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">GetXaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetLabelSize</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="w">    </span><span class="n">h_model</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;hist same e&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="w">    </span><span class="n">h_model</span><span class="o">-&gt;</span><span class="n">SetLineColor</span><span class="p">(</span><span class="n">kBlue</span><span class="p">);</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="w">    </span><span class="c1">// Add a legend</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="w">    </span><span class="n">TLegend</span><span class="w"> </span><span class="o">*</span><span class="n">leg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TLegend</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9</span><span class="p">);</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">AddEntry</span><span class="p">(</span><span class="n">h_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Data&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;p e&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">AddEntry</span><span class="p">(</span><span class="n">h_model</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Model&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;l&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span>
+<a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">SetBorderSize</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">SetFillStyle</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a>
+<a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a><span class="w">    </span><span class="c1">// Move to the lower pad, set the grid and margins</span>
+<a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a><span class="w">    </span><span class="n">low</span><span class="o">-&gt;</span><span class="n">cd</span><span class="p">();</span>
+<a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a><span class="w">    </span><span class="n">low</span><span class="o">-&gt;</span><span class="n">SetGridy</span><span class="p">();</span>
+<a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a><span class="w">    </span><span class="n">low</span><span class="o">-&gt;</span><span class="n">SetBottomMargin</span><span class="p">(</span><span class="mf">0.3</span><span class="p">);</span>
+<a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a>
+<a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a><span class="w">    </span><span class="c1">// Create a ratio histogram, this is done by dividing the data by the model</span>
+<a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a><span class="w">    </span><span class="n">TH1D</span><span class="w"> </span><span class="o">*</span><span class="n">h_ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">TH1D</span><span class="o">*</span><span class="p">)</span><span class="n">h_data</span><span class="o">-&gt;</span><span class="n">Clone</span><span class="p">(</span><span class="s">&quot;h_ratio&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-66" name="__codelineno-4-66" href="#__codelineno-4-66"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">Divide</span><span class="p">(</span><span class="n">h_model</span><span class="p">);</span>
+<a id="__codelineno-4-67" name="__codelineno-4-67" href="#__codelineno-4-67"></a>
+<a id="__codelineno-4-68" name="__codelineno-4-68" href="#__codelineno-4-68"></a><span class="w">    </span><span class="c1">// Draw the histograms and customise the style</span>
+<a id="__codelineno-4-69" name="__codelineno-4-69" href="#__codelineno-4-69"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;hist p e x0&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-70" name="__codelineno-4-70" href="#__codelineno-4-70"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">SetMarkerStyle</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<a id="__codelineno-4-71" name="__codelineno-4-71" href="#__codelineno-4-71"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">SetMarkerSize</span><span class="p">(</span><span class="mf">0.7</span><span class="p">);</span>
+<a id="__codelineno-4-72" name="__codelineno-4-72" href="#__codelineno-4-72"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetNdivisions</span><span class="p">(</span><span class="mi">505</span><span class="p">);</span>
+<a id="__codelineno-4-73" name="__codelineno-4-73" href="#__codelineno-4-73"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetLabelSize</span><span class="p">(</span><span class="mf">0.1</span><span class="p">);</span>
+<a id="__codelineno-4-74" name="__codelineno-4-74" href="#__codelineno-4-74"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitle</span><span class="p">(</span><span class="s">&quot;Data / Model&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-75" name="__codelineno-4-75" href="#__codelineno-4-75"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitleOffset</span><span class="p">(</span><span class="mf">0.4</span><span class="p">);</span>
+<a id="__codelineno-4-76" name="__codelineno-4-76" href="#__codelineno-4-76"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetYaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitleSize</span><span class="p">(</span><span class="mf">0.1</span><span class="p">);</span>
+<a id="__codelineno-4-77" name="__codelineno-4-77" href="#__codelineno-4-77"></a>
+<a id="__codelineno-4-78" name="__codelineno-4-78" href="#__codelineno-4-78"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetXaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetLabelSize</span><span class="p">(</span><span class="mf">0.1</span><span class="p">);</span>
+<a id="__codelineno-4-79" name="__codelineno-4-79" href="#__codelineno-4-79"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetXaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitle</span><span class="p">(</span><span class="s">&quot;Values&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-80" name="__codelineno-4-80" href="#__codelineno-4-80"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetXaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitleOffset</span><span class="p">(</span><span class="mf">1.2</span><span class="p">);</span>
+<a id="__codelineno-4-81" name="__codelineno-4-81" href="#__codelineno-4-81"></a><span class="w">    </span><span class="n">h_ratio</span><span class="o">-&gt;</span><span class="n">GetXaxis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetTitleSize</span><span class="p">(</span><span class="mf">0.1</span><span class="p">);</span>
+<a id="__codelineno-4-82" name="__codelineno-4-82" href="#__codelineno-4-82"></a>
+<a id="__codelineno-4-83" name="__codelineno-4-83" href="#__codelineno-4-83"></a><span class="w">    </span><span class="c1">// Divide the model histogram by itself to create a line at 1 with correct errors</span>
+<a id="__codelineno-4-84" name="__codelineno-4-84" href="#__codelineno-4-84"></a><span class="w">    </span><span class="n">TH1D</span><span class="w"> </span><span class="o">*</span><span class="n">h_ratio_one</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">TH1D</span><span class="o">*</span><span class="p">)</span><span class="n">h_model</span><span class="o">-&gt;</span><span class="n">Clone</span><span class="p">(</span><span class="s">&quot;h_ratio_one&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-85" name="__codelineno-4-85" href="#__codelineno-4-85"></a><span class="w">    </span><span class="n">h_ratio_one</span><span class="o">-&gt;</span><span class="n">Divide</span><span class="p">(</span><span class="n">h_model</span><span class="p">);</span>
+<a id="__codelineno-4-86" name="__codelineno-4-86" href="#__codelineno-4-86"></a><span class="w">    </span><span class="n">h_ratio_one</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;hist same e&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-87" name="__codelineno-4-87" href="#__codelineno-4-87"></a>
+<a id="__codelineno-4-88" name="__codelineno-4-88" href="#__codelineno-4-88"></a><span class="w">    </span><span class="c1">// Update the canvas and save the plot</span>
+<a id="__codelineno-4-89" name="__codelineno-4-89" href="#__codelineno-4-89"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span>
+<a id="__codelineno-4-90" name="__codelineno-4-90" href="#__codelineno-4-90"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">SaveAs</span><span class="p">(</span><span class="s">&quot;ratio.png&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-91" name="__codelineno-4-91" href="#__codelineno-4-91"></a><span class="p">}</span>
+</code></pre></div>
+<p><img alt="ratio" src="../images/ratio.png" /></p>
+<p>As you can appreciate most of the code deals with setting the correct label and axis title sizes/offset to make the plot readable, this is a very <em>annoying</em> part of ROOT. You can access the 'default' values of your plot by calling one of the <code>Get()</code> methods, i.e. <code>histogram-&gt;GetYaxis()-&gt;GetTitleSize()</code>, and then modify it accordingly. But most of the time it's a bit of guess work.</p>
+<p>You can also use the <a href="https://root.cern.ch/doc/master/classTRatioPlot.html">TRatioPlot class</a> which can avoid all this hassle and automatically create the ratio plot for you. The default output from this class is a bit ugly and it seems to take over any style you have selected in you main pad, but it is much faster and easier to use for quick comparisons.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="c1">// [previous code]</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="c1">// Create the ratio plot</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="n">TRatioPlot</span><span class="w"> </span><span class="o">*</span><span class="n">rp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TRatioPlot</span><span class="p">(</span><span class="n">h_data</span><span class="p">,</span><span class="w"> </span><span class="n">h_model</span><span class="p">);</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="c1">// Update the canvas and save the plot</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">SaveAs</span><span class="p">(</span><span class="s">&quot;ratio.png&quot;</span><span class="p">);</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="other-types-of-plots">Other types of plots</h3>
+<h4 id="tprofile">TProfile</h4>
+<p>A profile histogram is a histogram that contains the mean value of the Y variable for each bin in X. It is useful when you have a large number of points in a bin and you want to see the mean value of the Y variable. This video explains it very well with a simple example: <a href="https://www.youtube.com/watch?v=-VMcNp2R-V8">TProfile tutorial</a>. TProfile has also access to all TH1 options for plotting and setting the style.</p>
+<h4 id="tgraph-and-tgrapherrors">TGraph and TGraphErrors</h4>
+<p>These types of plots are your standard line graphs with uncertainties. They are very useful when you can't draw your functions properly with TH1 or you have a set of points you want to plot. You can read more about the in the <a href="https://root.cern.ch/doc/master/classTGraph.html">TGraph class</a>, <a href="https://root.cern.ch/doc/master/classTGraphErrors.html">TGraphErrors class</a> and also <a href="https://root.cern.ch/doc/master/classTGraphAsymmErrors.html">TGraphAsymmErrors class</a> for asymmetric errors.</p>
+<p>In particle physics they are not as common and typically histograms are treated as if they were graphs, but they can be the better choice in other cases. To achieve this, one can use the <code>TH1::SetBinConent()</code> method to set the y values and the <code>TH1::SetBinError()</code> method to set the uncertainties. </p>
+<p>Below is an example of how you can plot a TGraph of a Gaussian function with a background slope:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="c1">// Declaring the TCanvas(&quot;[canvas identifier]&quot;, &quot;[name of canvas]&quot;,  width, height)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">TCanvas</span><span class="w"> </span><span class="o">*</span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TCanvas</span><span class="p">(</span><span class="s">&quot;c1&quot;</span><span class="p">,</span><span class="s">&quot;c1&quot;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">600</span><span class="p">);</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="n">TF1</span><span class="w"> </span><span class="o">*</span><span class="n">func</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TF1</span><span class="p">(</span><span class="s">&quot;func&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;gaus + [3]*x&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// Declaring the function to be plotted</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="c1">// Set the parameters of the Gaussian(3)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Amplitude</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"> </span><span class="c1">// Mean</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Standard deviation</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="c1">// Set the parameters of the linear function</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Slope</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">    </span><span class="c1">// Declaring the graph to be plotted</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">    </span><span class="n">TGraph</span><span class="w"> </span><span class="o">*</span><span class="n">graph</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TGraph</span><span class="p">();</span><span class="w"> </span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span><span class="c1">// Filling the graph with the function values</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">        </span><span class="n">graph</span><span class="o">-&gt;</span><span class="n">SetPoint</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">/</span><span class="mf">5.</span><span class="p">,</span><span class="w"> </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">Eval</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mf">5.</span><span class="p">));</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">    </span><span class="c1">// Drawing the graph</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">    </span><span class="n">graph</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;AP&quot;</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">    </span><span class="n">graph</span><span class="o">-&gt;</span><span class="n">SetMarkerStyle</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="p">}</span>
+</code></pre></div>
+<p>A couple of notes on this code:</p>
+<ul>
+<li><code>TGraph()</code> has many constructors, you can define it with a set number of points <code>TGraph(int n)</code>, with a set of x and y values <code>TGraph(int n, vector x, vector y)</code>, or even empty as shown here and then fill it up later. The latter allows for more flexibility if your dataset size is unknown.</li>
+<li>The above code can also be done by just plotting the function directly with <code>func-&gt;Draw()</code>, but this is a simple example to show how to use TGraph.</li>
+<li>Perhaps a more common use of TGraph is to read arrays of numbers for x and y values, along with their uncertainties and plot them; there are plenty of examples online on how to do this.</li>
+</ul>
+<h3 id="fitting-in-root">Fitting in ROOT</h3>
+<p>Fitting custom functions in ROOT is done with a combination of the <a href="https://root.cern.ch/doc/master/classTF1.html">TF1 class</a> and the <a href="https://root.cern.ch/root/htmldoc/guides/users-guide/FittingHistograms.html">TH1::Fit()</a> method. The following code will attempt to fit and extract the Gaussian parameters of an analogous function to the one we defined in the <code>TGraph</code> example.</p>
+<details class="note">
+<summary>This is a long one</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;TH1.h&gt;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;TF1.h&gt;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;TCanvas.h&gt;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">// We can define two separate functions to account for the background and the signal Gaussian peak</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">Double_t</span><span class="w"> </span><span class="nf">background</span><span class="p">(</span><span class="n">Double_t</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Double_t</span><span class="w"> </span><span class="o">*</span><span class="n">par</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="p">}</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">Double_t</span><span class="w"> </span><span class="nf">gaussian</span><span class="p">(</span><span class="n">Double_t</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Double_t</span><span class="w"> </span><span class="o">*</span><span class="n">par</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">TMath</span><span class="o">::</span><span class="n">Gaus</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">}</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="c1">// Then we can add them together to get the full function</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">Double_t</span><span class="w"> </span><span class="nf">fitFunction</span><span class="p">(</span><span class="n">Double_t</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Double_t</span><span class="w"> </span><span class="o">*</span><span class="n">par</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">background</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">par</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="p">}</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="kt">void</span><span class="w"> </span><span class="nf">gaussian_fit</span><span class="p">()</span><span class="w"> </span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="p">{</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="n">gStyle</span><span class="o">-&gt;</span><span class="n">SetOptStat</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Setting the statistics box to be off by default</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">    </span><span class="c1">// Declaring the TCanvas(&quot;[canvas identifier]&quot;, &quot;[name of canvas]&quot;,  width, height)</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="w">    </span><span class="n">TCanvas</span><span class="w"> </span><span class="o">*</span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TCanvas</span><span class="p">(</span><span class="s">&quot;c1&quot;</span><span class="p">,</span><span class="s">&quot;c1&quot;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">600</span><span class="p">);</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">    </span><span class="c1">// We will first generate some plausible looking data to fit according to the function we defined</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">    </span><span class="n">TF1</span><span class="w"> </span><span class="o">*</span><span class="n">func_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TF1</span><span class="p">(</span><span class="s">&quot;func&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fitFunction</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="w">    </span><span class="n">func_data</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// Intercept</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="w">    </span><span class="n">func_data</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"> </span><span class="c1">// Slope</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="w">    </span><span class="n">func_data</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">);</span><span class="w"> </span><span class="c1">// Amplitude</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="w">    </span><span class="n">func_data</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"> </span><span class="c1">// Mean</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="w">    </span><span class="n">func_data</span><span class="o">-&gt;</span><span class="n">SetParameter</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">);</span><span class="w"> </span><span class="c1">// Standard deviation</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="w">    </span><span class="n">TRandom3</span><span class="w"> </span><span class="o">*</span><span class="n">rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TRandom3</span><span class="p">();</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="w">    </span><span class="n">TH1D</span><span class="w"> </span><span class="o">*</span><span class="n">hist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH1D</span><span class="p">(</span><span class="s">&quot;hist&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gaussian Peak on Linear Background&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">40</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">center</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">GetBinCenter</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a><span class="w">        </span><span class="c1">// To add a bit of randomness we will add some aritficical noise to the data</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">func_data</span><span class="o">-&gt;</span><span class="n">Eval</span><span class="p">(</span><span class="n">center</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="o">-&gt;</span><span class="n">Gaus</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a><span class="w">        </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">SetBinContent</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">);</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a><span class="w">        </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">SetBinError</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">TMath</span><span class="o">::</span><span class="n">Sqrt</span><span class="p">(</span><span class="n">content</span><span class="p">));</span>
+<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>
+<a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a><span class="w">    </span><span class="c1">// Drawing the graph</span>
+<a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;hist p e x0&quot;</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">SetLineColor</span><span class="p">(</span><span class="n">kBlack</span><span class="p">);</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">SetMarkerStyle</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">SetMinimum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>
+<a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a><span class="w">    </span><span class="c1">// To make it completely decoupled, we create another function to fit the data</span>
+<a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a><span class="w">    </span><span class="n">TF1</span><span class="w"> </span><span class="o">*</span><span class="n">func</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TF1</span><span class="p">(</span><span class="s">&quot;func&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fitFunction</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+<a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a>
+<a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a><span class="w">    </span><span class="c1">// We set an initial guess for the parameters</span>
+<a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">SetParameters</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a>
+<a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a><span class="w">    </span><span class="c1">// Fit parameters to the data will be stored in the array par</span>
+<a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a><span class="w">    </span><span class="n">Double_t</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+<a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a>
+<a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a><span class="w">    </span><span class="c1">// We perform the fit and apply some style options</span>
+<a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a><span class="w">    </span><span class="n">hist</span><span class="o">-&gt;</span><span class="n">Fit</span><span class="p">(</span><span class="s">&quot;func&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;same&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">GetParameters</span><span class="p">(</span><span class="n">par</span><span class="p">);</span>
+<a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">SetLineColor</span><span class="p">(</span><span class="n">kRed</span><span class="p">);</span>
+<a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">SetLineStyle</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-7-68" name="__codelineno-7-68" href="#__codelineno-7-68"></a><span class="w">    </span><span class="n">func</span><span class="o">-&gt;</span><span class="n">SetNpx</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-7-69" name="__codelineno-7-69" href="#__codelineno-7-69"></a>
+<a id="__codelineno-7-70" name="__codelineno-7-70" href="#__codelineno-7-70"></a><span class="w">    </span><span class="c1">// While the funciton fits both signal and background together, we can decouple those to make the visualisation of the fit better</span>
+<a id="__codelineno-7-71" name="__codelineno-7-71" href="#__codelineno-7-71"></a><span class="w">    </span><span class="n">TF1</span><span class="w"> </span><span class="o">*</span><span class="n">bckg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TF1</span><span class="p">(</span><span class="s">&quot;bckg&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">background</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-7-72" name="__codelineno-7-72" href="#__codelineno-7-72"></a><span class="w">    </span><span class="n">TF1</span><span class="w"> </span><span class="o">*</span><span class="n">gaus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TF1</span><span class="p">(</span><span class="s">&quot;gaus&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">gaussian</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<a id="__codelineno-7-73" name="__codelineno-7-73" href="#__codelineno-7-73"></a>
+<a id="__codelineno-7-74" name="__codelineno-7-74" href="#__codelineno-7-74"></a><span class="w">    </span><span class="c1">// We input the fit parameters to the background function and just plot it</span>
+<a id="__codelineno-7-75" name="__codelineno-7-75" href="#__codelineno-7-75"></a><span class="w">    </span><span class="n">bckg</span><span class="o">-&gt;</span><span class="n">SetParameters</span><span class="p">(</span><span class="n">par</span><span class="p">);</span>
+<a id="__codelineno-7-76" name="__codelineno-7-76" href="#__codelineno-7-76"></a><span class="w">    </span><span class="n">bckg</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;same&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-77" name="__codelineno-7-77" href="#__codelineno-7-77"></a><span class="w">    </span><span class="n">bckg</span><span class="o">-&gt;</span><span class="n">SetLineColor</span><span class="p">(</span><span class="n">kGreen</span><span class="p">);</span>
+<a id="__codelineno-7-78" name="__codelineno-7-78" href="#__codelineno-7-78"></a><span class="w">    </span><span class="n">bckg</span><span class="o">-&gt;</span><span class="n">SetNpx</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-7-79" name="__codelineno-7-79" href="#__codelineno-7-79"></a>
+<a id="__codelineno-7-80" name="__codelineno-7-80" href="#__codelineno-7-80"></a><span class="w">    </span><span class="c1">// Same for the Gaussian peak</span>
+<a id="__codelineno-7-81" name="__codelineno-7-81" href="#__codelineno-7-81"></a><span class="w">    </span><span class="n">gaus</span><span class="o">-&gt;</span><span class="n">SetParameters</span><span class="p">(</span><span class="o">&amp;</span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<a id="__codelineno-7-82" name="__codelineno-7-82" href="#__codelineno-7-82"></a><span class="w">    </span><span class="n">gaus</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;same&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-83" name="__codelineno-7-83" href="#__codelineno-7-83"></a><span class="w">    </span><span class="n">gaus</span><span class="o">-&gt;</span><span class="n">SetLineColor</span><span class="p">(</span><span class="n">kBlue</span><span class="p">);</span>
+<a id="__codelineno-7-84" name="__codelineno-7-84" href="#__codelineno-7-84"></a><span class="w">    </span><span class="n">gaus</span><span class="o">-&gt;</span><span class="n">SetNpx</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-7-85" name="__codelineno-7-85" href="#__codelineno-7-85"></a>
+<a id="__codelineno-7-86" name="__codelineno-7-86" href="#__codelineno-7-86"></a><span class="w">    </span><span class="c1">// We finalise the plot by addding a legend</span>
+<a id="__codelineno-7-87" name="__codelineno-7-87" href="#__codelineno-7-87"></a><span class="w">    </span><span class="n">TLegend</span><span class="w"> </span><span class="o">*</span><span class="n">leg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TLegend</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">);</span>
+<a id="__codelineno-7-88" name="__codelineno-7-88" href="#__codelineno-7-88"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">SetFillStyle</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-7-89" name="__codelineno-7-89" href="#__codelineno-7-89"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">SetBorderSize</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-7-90" name="__codelineno-7-90" href="#__codelineno-7-90"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">AddEntry</span><span class="p">(</span><span class="n">hist</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Data&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ep&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-91" name="__codelineno-7-91" href="#__codelineno-7-91"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">AddEntry</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Global Fit&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;l&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-92" name="__codelineno-7-92" href="#__codelineno-7-92"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">AddEntry</span><span class="p">(</span><span class="n">bckg</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Background Fit&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;l&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-93" name="__codelineno-7-93" href="#__codelineno-7-93"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">AddEntry</span><span class="p">(</span><span class="n">gaus</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gaussian Fit&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;l&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-94" name="__codelineno-7-94" href="#__codelineno-7-94"></a><span class="w">    </span><span class="n">leg</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span>
+<a id="__codelineno-7-95" name="__codelineno-7-95" href="#__codelineno-7-95"></a>
+<a id="__codelineno-7-96" name="__codelineno-7-96" href="#__codelineno-7-96"></a><span class="w">    </span><span class="c1">// Some prints of the Gaussian peak parameters</span>
+<a id="__codelineno-7-97" name="__codelineno-7-97" href="#__codelineno-7-97"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Amplitude: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<a id="__codelineno-7-98" name="__codelineno-7-98" href="#__codelineno-7-98"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Mean: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<a id="__codelineno-7-99" name="__codelineno-7-99" href="#__codelineno-7-99"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Sigma: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">par</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<a id="__codelineno-7-100" name="__codelineno-7-100" href="#__codelineno-7-100"></a>
+<a id="__codelineno-7-101" name="__codelineno-7-101" href="#__codelineno-7-101"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span>
+<a id="__codelineno-7-102" name="__codelineno-7-102" href="#__codelineno-7-102"></a><span class="w">    </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">SaveAs</span><span class="p">(</span><span class="s">&quot;Gaussian_fit.png&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-103" name="__codelineno-7-103" href="#__codelineno-7-103"></a><span class="p">}</span>
+</code></pre></div>
+<p><img alt="gaussian_fit" src="../images/Gaussian_fit.png" /></p>
+</details>
+<p>You can see how the final fit results agree quite well with the initial parameters we used to generate the data. The background and the Gaussian peak are also well separated and can be visualised separately. This is a very common practice in particle physics where you have a signal peak on top of a background distribution.</p>
+<h2 id="exercise-2">Exercise 2</h2>
+<p>The necessary files for the exercise are here: <a href="https://www.ppe.gla.ac.uk/~dspiteri/SUPAROO/Exercise2/">Exercise 2</a>, courtesy of last years lecturer: Dr. Dwayne Spiteri.</p>
+<p>We’re going to perform a search for the Higgs via it’s subsequent decay into a pair of photons <span class="arithmatex">\((H \rightarrow \gamma\gamma)\)</span>. It has a tiny branching ratio but a distinctive signature due to the two photons having good energy resolution.</p>
+<p><code>PsuedoData_Histogram_100fb.root</code> is the data that was measured corresponding to 100fb<span class="arithmatex">\(^{−1}\)</span>.</p>
+<p><code>Signal_1fb.root</code> and <code>Background_1fb.root</code> are the signal and background simulations corresponding to 1fb<span class="arithmatex">\(^{−1}\)</span>. The TTrees in the simulation files contain two variables: diphoton invariant mass (invariant-Mass) and the event weight (eventWeight).</p>
+<p>Your task is to:</p>
+<ol>
+<li>Plot the data:<ol>
+<li>Plot the TH1D histogram called signal in the (Psuedo-)data file (<em>1st canvas</em>)</li>
+</ol>
+</li>
+<li>Plot the background simulation<ol>
+<li>Create histogram of invariant-Mass weighted by the eventWeight. <em>2nd canvas</em></li>
+<li>Scale simulation to match luminosity of the data. <em>Hint: looks at the file names</em></li>
+<li>Perform a fit on the background model, there are many default functions in ROOT that you can try. Which one do you think is the best? Which metric can you use to determine this?</li>
+</ol>
+</li>
+<li>Background-only hypothesis test<ol>
+<li>Plot the data and background on the same plot (<em>3rd canvas</em>)</li>
+<li>Plot the difference between data and background in a subplot</li>
+</ol>
+</li>
+<li>Finalise the plot<ol>
+<li>Add the signal to that of the background (<em>can be done in the same canvas as the previous step</em>)</li>
+<li>Make the plot look pretty like you want to put it on a mug or your fridge.</li>
+</ol>
+</li>
+</ol>
 
 
 
@@ -453,6 +994,12 @@
     
     
       <script src="../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+        <script src="../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
       
     
   </body>
