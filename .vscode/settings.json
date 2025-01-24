@@ -3,6 +3,8 @@
         "test.C": "cpp",
         "iosfwd": "cpp",
         "vector": "cpp",
-        "ex1Solution.C": "cpp"
+        "ex1Solution.C": "cpp",
+        "tet.C": "cpp",
+        "ratio.C": "cpp"
     }
 }
