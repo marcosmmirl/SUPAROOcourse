@@ -383,7 +383,7 @@ You can see how the final fit results agree quite well with the initial paramete
 
 ## Exercise 2
 
-The necessary files for the exercise are here: [Exercise 2](https://www.ppe.gla.ac.uk/~dspiteri/SUPAROO/Exercise2/), courtesy of last years lecturer: Dr. Dwayne Spiteri.
+The necessary files for the exercise are here: [Exercise 2](https://www.ppe.gla.ac.uk/~dspiteri/SUPAROO/Exercise2/), courtesy of last years lecturer: Dr. Dwayne Spiteri. They are also posted in the course [website](https://my.supa.ac.uk/course/section.php?id=9237).
 
 We’re going to perform a search for the Higgs via it’s subsequent decay into a pair of photons $(H \rightarrow \gamma\gamma)$. It has a tiny branching ratio but a distinctive signature due to the two photons having good energy resolution.
 

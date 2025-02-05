@@ -8,19 +8,24 @@ In this first lecture we will learn how to setup ROOT in your machine and the ba
 
 If you want to install ROOT in your machine, you can follow the instructions in the [ROOT website](https://root.cern/install/). In my experience one does not simply install ROOT in their first try, so good luck!
 
-With access to cvmfs on one of the Lab Room machines, you can simply run the following command to setup ROOT:
+With access to cvmfs on one of the Lab Room machines, you can simply run the following command in the terminal to setup ROOT (this will have to be done every terminal session):
 
 ```bash
-setup root
+cvmfs_config probe
+source /cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.28.12/x86_64-centos8-gcc85-opt/bin/thisroot.sh
+which root
+root
+```
+
+You can exit ROOT at all times by typing
+
+```cpp
+root[1] .q
 ```
 
 ### Downloading the data
 
-We will use some pregenerated Monte Carlo events coming from ATLAS for the purpose of this tutorial. You can download this data from [here](XXX). Or you can type the following command in your terminal:
-
-```bash
-wget https://www.example.com/data.root
-```
+We will use some pregenerated Monte Carlo events coming from ATLAS for the purpose of this tutorial. You can download this data from [here](https://my.supa.ac.uk/course/section.php?id=9237), under *Lecture1 Input File*.
 
 This file contains some processed Monte Carlo events for **top anti-top pair production** for the latest Run3 centre of mass energy of 13.6 TeV at the LHC. 
 
@@ -96,7 +101,7 @@ While this is a nice tool for quick visualisation, it is not very useful for mor
 
 #### Writing some code in the terminal
 
-We can ask root in the command line to draw the same histograms we were seeing in the TBrowser. This will create a new window (or TCanvas as ROOT calls it) with the histogram. The syntax is ```tree_name->Draw("branch_name", "weights*selections", "options)```. Available options for drwaing can be found in the [THistPainter ROOT Class](https://root.cern/doc/master/classTHistPainter.html). Typicalle, using "HIST E" will draw a standard histogram with error bars and the data points (it does not care about upper/lower case).
+We can ask root in the command line to draw the same histograms we were seeing in the TBrowser. This will create a new window (or TCanvas as ROOT calls it) with the histogram. The syntax is ```tree_name->Draw("branch_name", "weights*selections", "options")```. Available options for drwaing can be found in the [THistPainter ROOT Class](https://root.cern/doc/master/classTHistPainter.html). Typicalle, using "HIST E" will draw a standard histogram with error bars and the data points (it does not care about upper/lower case).
 
 For example:
 
@@ -128,9 +133,9 @@ At this stage one can also make the plot more fancy by adding a legend, axis lab
 
 #### Looping over the ROOT file
 
-For more complex calculations, for instance if you want to calculate the invariant mass of a pair of jets, or boost to a certain frame, you will need to write a macro. You may use either Pyhton or C++ for this, whatever you feel more comfortable with. You can run the **Python** code in the terminal using ```python3 [programName.py]``` and the **C++** code using ```root -l [programName.C]```.
+For more complex calculations, for instance if you want to calculate the invariant mass of a pair of jets, or boost to a certain frame, you will need to write a macro. You may use either Pyhton or C++ for this, whatever you feel more comfortable with. You can run the **Python** code in the terminal using ```python3.11 [programName.py]``` and the **C++** code using ```root -l [programName.C]```.
 
-Below are two example codes that do the exact same thing, but one is in Python and the other in C++. Both loop over all of the events and declare two histograms, one for the leading jet transverse momentum and another for the number of jets in the event. However, both have the same *bug* that will throw an **error**. Can you spot it, and fix it?
+Below are two example codes that do the exact same thing, but one is in Python and the other in C++. Both loop over all of the events and declare two histograms, one for the leading jet transverse momentum and another for the number of jets in the event. 
 
 Note that none of them will produce any output since they are just internally declaring the histograms, however if you run the C++ version you will have access to the newly created histograms in the ROOT interpreter. This means you can plot them using e.g. ```h_lead_jet_pt->Draw()```.
 
@@ -149,7 +154,7 @@ void programName() {
     Int_t nJets;
     std::vector<float> *jet_pt = nullptr;
 
-    // Link the branches to the variables
+    // Link the branches to the variables SetBranchAddress("branch_name_in_tree", &variable)
     reco->SetBranchAddress("jet_pt_NOSYS", &jet_pt);
     reco->SetBranchAddress("nJets", &nJets);
 
@@ -187,6 +192,8 @@ void programName() {
         h_nJets.Fill(reco.nJets)
     ```
 
+* Both codes have the same **bug that will throw an error**. *Can you spot it, and fix it?* 
+* In addition, these examples fill the histograms while **ignoring the event weight**. *Can you add the MC event weight to the histograms?*
 
 #### RDataFrame
 

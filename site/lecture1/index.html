@@ -612,13 +612,17 @@
 <p>In this first lecture we will learn how to setup ROOT in your machine and the basics of <strong>reading</strong> and <strong>writing</strong> ROOT files. </p>
 <h3 id="setting-up-root">Setting up ROOT</h3>
 <p>If you want to install ROOT in your machine, you can follow the instructions in the <a href="https://root.cern/install/">ROOT website</a>. In my experience one does not simply install ROOT in their first try, so good luck!</p>
-<p>With access to cvmfs on one of the Lab Room machines, you can simply run the following command to setup ROOT:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>setup<span class="w"> </span>root
+<p>With access to cvmfs on one of the Lab Room machines, you can simply run the following command in the terminal to setup ROOT (this will have to be done every terminal session):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cvmfs_config<span class="w"> </span>probe
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">source</span><span class="w"> </span>/cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.28.12/x86_64-centos8-gcc85-opt/bin/thisroot.sh
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>which<span class="w"> </span>root
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>root
+</code></pre></div>
+<p>You can exit ROOT at all times by typing</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">root</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">.</span><span class="n">q</span>
 </code></pre></div>
 <h3 id="downloading-the-data">Downloading the data</h3>
-<p>We will use some pregenerated Monte Carlo events coming from ATLAS for the purpose of this tutorial. You can download this data from <a href="XXX">here</a>. Or you can type the following command in your terminal:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wget<span class="w"> </span>https://www.example.com/data.root
-</code></pre></div>
+<p>We will use some pregenerated Monte Carlo events coming from ATLAS for the purpose of this tutorial. You can download this data from <a href="https://my.supa.ac.uk/course/section.php?id=9237">here</a>, under <em>Lecture1 Input File</em>.</p>
 <p>This file contains some processed Monte Carlo events for <strong>top anti-top pair production</strong> for the latest Run3 centre of mass energy of 13.6 TeV at the LHC. </p>
 <h3 id="viewing-the-contents-of-the-file">Viewing the contents of the file</h3>
 <p>We can view the contents of this file by running the following command <code>root [options] [file]</code>. For example:</p>
@@ -690,7 +694,7 @@ With <code>Scan</code> you may also fo simple arithmetic operations like
 </ul>
 <p>While this is a nice tool for quick visualisation, it is not very useful for more complex operations. For that we will need to write some code.</p>
 <h4 id="writing-some-code-in-the-terminal">Writing some code in the terminal</h4>
-<p>We can ask root in the command line to draw the same histograms we were seeing in the TBrowser. This will create a new window (or TCanvas as ROOT calls it) with the histogram. The syntax is <code>tree_name-&gt;Draw("branch_name", "weights*selections", "options)</code>. Available options for drwaing can be found in the <a href="https://root.cern/doc/master/classTHistPainter.html">THistPainter ROOT Class</a>. Typicalle, using "HIST E" will draw a standard histogram with error bars and the data points (it does not care about upper/lower case).</p>
+<p>We can ask root in the command line to draw the same histograms we were seeing in the TBrowser. This will create a new window (or TCanvas as ROOT calls it) with the histogram. The syntax is <code>tree_name-&gt;Draw("branch_name", "weights*selections", "options")</code>. Available options for drwaing can be found in the <a href="https://root.cern/doc/master/classTHistPainter.html">THistPainter ROOT Class</a>. Typicalle, using "HIST E" will draw a standard histogram with error bars and the data points (it does not care about upper/lower case).</p>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">reco</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;jet_pt_NOSYS/1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;weight_mc_NOSYS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hist&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// This will draw the jet_pt_NOSYS in GeV and with the Monte Carlo event weight applied</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
@@ -711,8 +715,8 @@ With <code>Scan</code> you may also fo simple arithmetic operations like
 </code></pre></div>
 <p>At this stage one can also make the plot more fancy by adding a legend, axis labels, changing the line color and style, aspect ratio, etc. But we will dive into all of these options in the <a href="../lecture2/">next lecture</a>.</p>
 <h4 id="looping-over-the-root-file">Looping over the ROOT file</h4>
-<p>For more complex calculations, for instance if you want to calculate the invariant mass of a pair of jets, or boost to a certain frame, you will need to write a macro. You may use either Pyhton or C++ for this, whatever you feel more comfortable with. You can run the <strong>Python</strong> code in the terminal using <code>python3 [programName.py]</code> and the <strong>C++</strong> code using <code>root -l [programName.C]</code>.</p>
-<p>Below are two example codes that do the exact same thing, but one is in Python and the other in C++. Both loop over all of the events and declare two histograms, one for the leading jet transverse momentum and another for the number of jets in the event. However, both have the same <em>bug</em> that will throw an <strong>error</strong>. Can you spot it, and fix it?</p>
+<p>For more complex calculations, for instance if you want to calculate the invariant mass of a pair of jets, or boost to a certain frame, you will need to write a macro. You may use either Pyhton or C++ for this, whatever you feel more comfortable with. You can run the <strong>Python</strong> code in the terminal using <code>python3.11 [programName.py]</code> and the <strong>C++</strong> code using <code>root -l [programName.C]</code>.</p>
+<p>Below are two example codes that do the exact same thing, but one is in Python and the other in C++. Both loop over all of the events and declare two histograms, one for the leading jet transverse momentum and another for the number of jets in the event. </p>
 <p>Note that none of them will produce any output since they are just internally declaring the histograms, however if you run the C++ version you will have access to the newly created histograms in the ROOT interpreter. This means you can plot them using e.g. <code>h_lead_jet_pt-&gt;Draw()</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;TFile.h&gt;</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;TTree.h&gt;</span>
@@ -728,7 +732,7 @@ With <code>Scan</code> you may also fo simple arithmetic operations like
 <a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="n">Int_t</span><span class="w"> </span><span class="n">nJets</span><span class="p">;</span>
 <a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">jet_pt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
 <a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>
-<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="c1">// Link the branches to the variables</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="c1">// Link the branches to the variables SetBranchAddress(&quot;branch_name_in_tree&quot;, &amp;variable)</span>
 <a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">    </span><span class="n">reco</span><span class="o">-&gt;</span><span class="n">SetBranchAddress</span><span class="p">(</span><span class="s">&quot;jet_pt_NOSYS&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">jet_pt</span><span class="p">);</span>
 <a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">    </span><span class="n">reco</span><span class="o">-&gt;</span><span class="n">SetBranchAddress</span><span class="p">(</span><span class="s">&quot;nJets&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">nJets</span><span class="p">);</span>
 <a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
@@ -764,6 +768,10 @@ With <code>Scan</code> you may also fo simple arithmetic operations like
 <a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    <span class="n">h_nJets</span><span class="o">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">reco</span><span class="o">.</span><span class="n">nJets</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<ul>
+<li>Both codes have the same <strong>bug that will throw an error</strong>. <em>Can you spot it, and fix it?</em> </li>
+<li>In addition, these examples fill the histograms while <strong>ignoring the event weight</strong>. <em>Can you add the MC event weight to the histograms?</em></li>
+</ul>
 <h4 id="rdataframe">RDataFrame</h4>
 <p>The <strong>RDataFrame</strong> class is a new feature in ROOT that allows you to do complex operations on the TTree in a more Pythonic way. The full documentation along with more examples can be found in the <a href="https://root.cern/doc/v628/classROOT_1_1RDataFrame.html">RDataFrame Class</a>. For example, the following code will do the same as the previous examples, but in a more compact way:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">programName</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
