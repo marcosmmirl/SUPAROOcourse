@@ -238,6 +238,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Welcome to the SUPAROO25 documentation
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         
   
@@ -247,6 +258,76 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linux-lab-terminal-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux Lab Terminal Commands:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#editing-in-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      Editing in Linux:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Editing in Linux:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nano
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vim
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emacs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emacs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -332,6 +413,65 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linux-lab-terminal-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux Lab Terminal Commands:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#editing-in-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      Editing in Linux:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Editing in Linux:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nano
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vim
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emacs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emacs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -353,6 +493,59 @@
 <li><a href="lecture2/">Lecture 2</a></li>
 <li><a href="lecture3/">Lecture 3</a></li>
 </ul>
+<h2 id="linux-lab-terminal-commands">Linux Lab Terminal Commands:</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ls</code></td>
+<td>List files and directories</td>
+</tr>
+<tr>
+<td><code>cd</code></td>
+<td>Change directory. To go back to the previous directory use <code>cd ..</code></td>
+</tr>
+<tr>
+<td><code>pwd</code></td>
+<td>Print working directory</td>
+</tr>
+<tr>
+<td><code>touch [filename]</code></td>
+<td>Create a new file</td>
+</tr>
+<tr>
+<td><code>mkdir [name_of_directory]</code></td>
+<td>Create a new directory</td>
+</tr>
+<tr>
+<td><code>rm [filename]</code></td>
+<td>Remove a file</td>
+</tr>
+<tr>
+<td><code>mv [origin] [destination]</code></td>
+<td>Move a file</td>
+</tr>
+</tbody>
+</table>
+<p>Remember to use <code>Tab</code> often to autocomplete commands and paths.</p>
+<h2 id="editing-in-linux">Editing in Linux:</h2>
+<p>There are several editors available to you in Linux, this might change in a different operating system. Here are some of the most common ones:</p>
+<ul>
+<li><code>nano</code></li>
+<li><code>vim</code></li>
+<li><code>emacs</code></li>
+</ul>
+<h3 id="nano">Nano</h3>
+<p>Nano is a simple text editor that is easy to use. To open a file with nano, type <code>nano [filename]</code>. To save and exit, press <code>Ctrl + X</code>, then <code>Y</code> to confirm, and finally <code>Enter</code> to save. </p>
+<h3 id="vim">Vim</h3>
+<p>Vim is a more complex text editor that is very powerful. To open a file with vim, type <code>vim [filename]</code>. To edit, press <code>i</code> to enter insert mode (you should see <code>-- INSERT --</code> at the bottom of the terminal). To exit insert mode, press <code>Esc</code>. To save and exit, press <code>Esc</code> to enter command mode, then type <code>:wq</code> and press <code>Enter</code> to save and exit. To exit without saving, press <code>Esc</code> to enter command mode, then type <code>:q!</code> and press <code>Enter</code>. If you have done no changes, you can also press <code>:q</code> and <code>Enter</code> to exit.</p>
+<h3 id="emacs">Emacs</h3>
+<p>Emacs is another powerful text editor. To open a file with emacs, type <code>emacs [filename]</code>. To save and exit, press <code>Ctrl + X</code>, then <code>Ctrl + S</code> to save, and finally <code>Ctrl + X</code> and <code>Ctrl + C</code> to exit. The advantage of emacs is that it opens in a graphical interface, which can be easier to use.</p>
 
 
 
