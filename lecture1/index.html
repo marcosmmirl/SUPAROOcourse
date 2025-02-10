@@ -952,8 +952,12 @@ With <code>Scan</code> you may also fo simple arithmetic operations like
 <li>Make a histogram of the leading and sub-leading jet transverse momentum for events with at least 3 jets and at least 1 b-jet. Remember that events in a histogram should be weighted using the Monte Carlo weight. Save it to the same root file.</li>
 <li>Make another histogram of the leading lepton transverse momentum for events with at least 2 leptons, at least 1 b-jet and save it.</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Physics content</p>
+<p>In these root files, the first element of the <code>jet_pt</code> (or any <code>jet*</code>, <code>lepton*</code> branch) <code>vector&lt;float&gt;</code> corresponds to the <strong>leading jet</strong>, i.e. the jet with the highest transverse momentum in the whole event. They have already been ordered for you to make it easier.</p>
+</div>
 </li>
-<li>Construct the lepton's four-momentum vectors and calculate the invariant mass of the lepton pair. Make a histogram of the invariant mass for events with exactly 2 leptons and at least 1 b-jet. Save it to the same root file.</li>
+<li>Construct the lepton's four-momentum vectors and calculate the invariant mass of the lepton pair (the leading and subleading leptons in the event). Make a histogram of the invariant mass for events with exactly 2 leptons and at least 1 b-jet. Save it to the same root file.</li>
 </ol>
 <details class="note">
 <summary>Hint</summary>
