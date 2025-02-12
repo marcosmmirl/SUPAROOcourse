@@ -471,6 +471,21 @@
 <ol>
 <li>All plotting and fitting must be done using ROOT functions.</li>
 </ol>
+<p>This dataset has a similar structure to the on in Lecture 1, with the addition of the <code>truth</code> tree. In particle physics, the <code>reco</code> tree shows the reconstructed particles after the detector simulation and all of it's effects. These effects come from the detector resolution, efficiency, and other factors and are essential when comparing to data.</p>
+<p>The <code>thruth</code> tree shows the "true" information from the particle coming directly from the MC generator and before detector simulation. It allows us to know exactly what process is being modelled and it is useful to make comparisons with the <code>reco</code> tree to understand detector effects.</p>
+<details class="note">
+<summary>Contents of the <code>truth</code> tree</summary>
+<p>There are many variables in the truth tree all preceded by the <code>Truth_MC</code> prefix. In this dataset, you will encounter 4 quarks, i.e. <code>q1</code>, <code>q2</code>, <code>q3</code>, and <code>q4</code> and 3 vector bosons, i.e. <code>V1</code>, <code>V2</code> and <code>V3</code>. The bosons will also decay to pairs of other particles, to conserve quantum numbers, which are represented by the variables that contain the words <code>decay1</code> or <code>decay2</code>. </p>
+<p>With this information, and by looking at the PDG codes/numbers (2nd page <a href="https://pdg.lbl.gov/2007/reviews/montecarlorpp.pdf">here</a>), you should be able to identity each of the particles and then have an idea of which process they are part of. <em>Note that the antiparticle PDG code/number of any particle is just the negative value of it.</em></p>
+</details>
+<p>Here are some things you can do to get you started:</p>
+<ul>
+<li>Examine the <code>truth</code> tree, identify the particles and properties</li>
+<li>Compare alike variables in the <code>truth</code> and <code>reco</code> trees to understand the detector effects</li>
+<li>Make histograms form the <code>reco</code> tree to understand the kinematics of the detected particles</li>
+<li>Invariant masses of pairs of decaying particle can provide valuable information</li>
+<li>A pre-selection has been applied to the dataset, can you tell what it is?</li>
+</ul>
 <p><em>You can record your finding in a separate txt/doc file or comment your code along the way to let me know what you are doing.</em></p>
 
 
