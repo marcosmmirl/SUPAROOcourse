@@ -335,6 +335,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tree-friending" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tree Friending
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merging-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merging Trees
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rdataframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDataFrame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#project" class="md-nav__link">
     <span class="md-ellipsis">
       Project
@@ -402,6 +429,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tree-friending" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tree Friending
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merging-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merging Trees
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rdataframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDataFrame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#project" class="md-nav__link">
     <span class="md-ellipsis">
       Project
@@ -450,10 +504,75 @@
 
 
 <h1 id="lecture-3">Lecture 3</h1>
+<p>This lecture is mostly aimed at adding a few more tools to manage and manipulate data in ROOT. At the end of the lecture there you will find the description of the projects that you can work on.</p>
+<h2 id="tree-friending">Tree Friending</h2>
+<p>If you want to access information from one tree while within another, you can link the trees in a process called “friending”. A common example is to link together reconstructed event (reco) trees with their respective truth trees. But here it is important that the trees have the same events, otherwise the linking will produce wrong results.</p>
+<p>Oftentimes root files have multiple trees in them, if you have loaded a root file like this then, the syntax for friending TTrees is simple:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">[</span><span class="n">basetree</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">AddFriend</span><span class="p">([</span><span class="n">friendtree</span><span class="p">])</span>
+</code></pre></div>
+<p>But you can also add friends from other files.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">[</span><span class="n">basetree</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">AddFriend</span><span class="p">([</span><span class="n">friendtree</span><span class="p">],[</span><span class="n">filename</span><span class="p">])</span>
+</code></pre></div>
+<p>With this, both trees may be accessed when scanning or drawing branches from the command line, like:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">[</span><span class="n">basetree</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Scan</span><span class="p">([</span><span class="n">basetree</span><span class="p">].[</span><span class="n">branchname1</span><span class="p">]</span><span class="o">:</span><span class="p">[</span><span class="n">friendtree</span><span class="p">].[</span><span class="n">branchname1</span><span class="p">])</span>
+</code></pre></div>
+<p>By default the friends will be added on some internal index. But again, this might be useless if you are not dealing with the same events from both trees. It is possible to specify how the trees are linked by using the <code>BuildIndex</code> function. This function is used to specify the branch that will be used to link the two trees:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">[</span><span class="n">basetree</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">BuildIndex</span><span class="p">([</span><span class="n">branchname</span><span class="p">]);</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">[</span><span class="n">friendtree</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">BuildIndex</span><span class="p">([</span><span class="n">branchname</span><span class="p">]);</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">[</span><span class="n">basetree</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">AddFriend</span><span class="p">([</span><span class="n">friendtree</span><span class="p">]);</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Particle Physics example</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// Some preceding code</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">// In particle physics, truth trees usually contain information of the event before the detector simulation, so they typically have more events than the reco tree since many cuts are applied at reco level. If we wanted to loop over the truth tree, bt only for events ont the reco tree, we could do the following:</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">truthTree</span><span class="o">-&gt;</span><span class="n">BuildIndex</span><span class="p">(</span><span class="s">&quot;runNumber&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eventNumber&quot;</span><span class="p">);</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">recoTree</span><span class="o">-&gt;</span><span class="n">GetEntries</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="n">recoTree</span><span class="o">-&gt;</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="n">truthTree</span><span class="o">-&gt;</span><span class="n">GetEntryWithIndex</span><span class="p">(</span><span class="n">recoTree</span><span class="o">-&gt;</span><span class="n">runNumber</span><span class="p">,</span><span class="w"> </span><span class="n">recoTree</span><span class="o">-&gt;</span><span class="n">eventNumber</span><span class="p">);</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="c1">// Do something with the truth tree</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="c1">// [...]</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="p">}</span>
+</code></pre></div>
+</div>
+<h2 id="merging-trees">Merging Trees</h2>
+<p>There are multiple ways to mix root files together, assuming that they have the same internal structure. Otherwise it might be a nightmare to do it. The simplest is to us the <code>hadd</code> command in the terminal. This command is used to merge ROOT files together, and it can be used to merge trees as well. The syntax in the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>hadd<span class="w"> </span><span class="o">[</span>outputfile<span class="o">]</span><span class="w"> </span><span class="o">[</span>inputfile1<span class="o">]</span><span class="w"> </span><span class="o">[</span>inputfile2<span class="o">]</span><span class="w"> </span>...
+</code></pre></div>
+<p>Another useful way to merge files is to use the <a href="https://root.cern.ch/doc/master/classTChain.html"><code>TChain</code> class</a>. This is a class that allows you to chain <em>multiple trees</em> together and treat them as a single tree. It is specially useful when you want to merge trees within a macro. In the examples below we are merging two trees from two different files (both trees <strong>must</strong> have the same name):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">TChain</span><span class="w"> </span><span class="o">*</span><span class="n">chain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TChain</span><span class="p">(</span><span class="s">&quot;treeName&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">chain</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;file1.root&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">chain</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;file2.root&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1">// Now you can loop over the chain as if it was a single tree and it will have the same methods and functions as a TTree</span>
+</code></pre></div>
+<h2 id="rdataframe">RDataFrame</h2>
+<p>This topic has been discussed previously in Lecture 1, RDataFrame aims to be a more modern way to access root trees, similar to a pandas dataframe in python. It is a high-level interface to ROOT trees that allows you to perform operations on the data in a more intuitive way. It is a very powerful tool that can be used to filter, transform, and aggregate data in a very efficient way.</p>
+<p>To create an RDataFrame just extract the tree(s) you want in the dataframe:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// For a single file</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">ROOT</span><span class="o">::</span><span class="n">RDataFrame</span><span class="w"> </span><span class="nf">dataframeName1</span><span class="p">(</span><span class="err">“</span><span class="n">treename</span><span class="err">”</span><span class="p">,</span><span class="err">“</span><span class="n">filename</span><span class="p">.</span><span class="n">root</span><span class="err">”</span><span class="p">);</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1">// For multiple files</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="err">“</span><span class="n">filename1</span><span class="p">.</span><span class="n">root</span><span class="err">”</span><span class="p">,</span><span class="err">“</span><span class="n">filename2</span><span class="p">.</span><span class="n">root</span><span class="err">”</span><span class="p">};</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">ROOT</span><span class="o">::</span><span class="n">RDataFrame</span><span class="w"> </span><span class="nf">dataframeName2</span><span class="p">(</span><span class="err">“</span><span class="n">treename</span><span class="err">”</span><span class="p">,</span><span class="w"> </span><span class="n">files</span><span class="p">);</span>
+</code></pre></div>
+<p>Once you have the trees you want inside a dataframe object, you can sift through events by passing them through a filter. The filter is a lambda function that returns a boolean value. If the function returns <code>true</code>, the event is kept, otherwise it is discarded. For example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">auto</span><span class="w"> </span><span class="n">histName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataframe</span><span class="p">.</span><span class="n">Filter</span><span class="p">(</span><span class="s">&quot;nJets &gt; 2&quot;</span><span class="p">).</span><span class="n">Histo1D</span><span class="p">(</span><span class="s">&quot;lepton_pt&quot;</span><span class="p">);</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">histName</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span>
+</code></pre></div>
+<p>RDataFrames can be manipulated like databases. The ‘Define’ function will create new columns in the code, but you also can create them to compute values on the fly. Functions may also be fed into the <code>Filter</code> method to streamline and simplify the code. Be wary that the define function changes the dataframe by adding the column into the database. Here <code>r</code> will available for later use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">Double</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataframe</span><span class="p">.</span><span class="n">Filter</span><span class="p">(</span><span class="err">“</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">y</span><span class="err">”</span><span class="p">).</span><span class="n">Define</span><span class="p">(</span><span class="err">“</span><span class="n">r</span><span class="err">”</span><span class="p">,</span><span class="w"> </span><span class="err">“</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="err">”</span><span class="w"> </span><span class="p">).</span><span class="n">Mean</span><span class="p">(</span><span class="err">“</span><span class="n">r</span><span class="err">”</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">RDataFRame Actions and Queries</p>
+<p>Actions will aggregate data and output a smart pointer to a single value, while queries will simply return information about the RDataFrame object. Most RDataFrame actions are “lazy” meaning that they only run the event-loop once. The trick is that actions are not executed at the moment they are called, but are delayed until the moment one of their results is accessed through the smart pointer. At that time, the event loop is triggered and all results are produced simultaneously.</p>
+</div>
 <h2 id="project">Project</h2>
 <p>There are two projects that can be done. The goal here is open-ended and it is a chance for you to put in practice what you have learned and go as far as you want. The level of code expected from you will be of the level of the previous two exercises. </p>
 <h3 id="project-1-weather-report">Project 1: Weather Report</h3>
-<p>This project will use a real-life dataset of the weather conditions over the last year from two locations: here in <em>Glasgow</em>, and <em>Valencia</em> in Spain. As you might expect the weather patterns in both cities are very different so your task is to show and quantify what are these major differences. There are only two rules:</p>
+<p>This project will use a real-life dataset of the weather conditions over the last year from two locations: here in <em>Glasgow</em>, and <em>Valencia</em> in Spain. As you might expect the weather patterns in both cities are very different so your task is to show and quantify what are these major differences. <strong>There are only two rules</strong>:</p>
 <ol>
 <li>This dataset is a <code>.csv</code> file which you will have to convert to ROOT format as a first step.</li>
 <li>All plotting and fitting must be done using ROOT functions.</li>
@@ -467,7 +586,7 @@
 </ul>
 <p><em>You can record your finding in a separate txt/doc file or comment your code along the way to let me know what you are doing.</em></p>
 <h3 id="project-2-mystery-sample">Project 2: Mystery Sample</h3>
-<p>This project takes inspiration from last's years project. The goal here is to explore a mystery dataset that has been generated by the ATLAS collaboration for a specific particle physics process. This project will require some particle physics knowledge. Explore the sample and try to uncover what process it is and which distributions best show the key characteristics of the process. Some paper reading could be beneficial here. There is one rule:</p>
+<p>This project takes inspiration from last's years project. The goal here is to explore a mystery dataset that has been generated by the ATLAS collaboration for a specific particle physics process. This project will require some particle physics knowledge. Explore the sample and try to uncover what process it is and which distributions best show the key characteristics of the process. Some paper reading could be beneficial here. <strong>There is one rule</strong>:</p>
 <ol>
 <li>All plotting and fitting must be done using ROOT functions.</li>
 </ol>
