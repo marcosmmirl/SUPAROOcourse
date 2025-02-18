@@ -362,6 +362,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#uproot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uproot
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#project" class="md-nav__link">
     <span class="md-ellipsis">
       Project
@@ -450,6 +459,15 @@
   <a href="#rdataframe" class="md-nav__link">
     <span class="md-ellipsis">
       RDataFrame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uproot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uproot
     </span>
   </a>
   
@@ -569,6 +587,47 @@
 <p class="admonition-title">RDataFRame Actions and Queries</p>
 <p>Actions will aggregate data and output a smart pointer to a single value, while queries will simply return information about the RDataFrame object. Most RDataFrame actions are “lazy” meaning that they only run the event-loop once. The trick is that actions are not executed at the moment they are called, but are delayed until the moment one of their results is accessed through the smart pointer. At that time, the event loop is triggered and all results are produced simultaneously.</p>
 </div>
+<h2 id="uproot">Uproot</h2>
+<p>Uproot is a Python library designed to extract and manage data from ROOT files in a more python-natural way than PyROOT. Uproot can access data in ROOT files without a dedicated C++ ROOT compiler. Uproot is its own implementation of ROOT I/O, not just a front-end for C++ operations. Uproot is substantially less buggy than PyROOT, and has much more predictable interactions with other python libraries and code.</p>
+<p>Opening a ROOT file with Uproot is as simple as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">file</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;filename.root&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># OR</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">with</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;filename.root&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="c1"># Do something with the file</span>
+</code></pre></div>
+<p>Uproot uses a Python mapping (dictionary) to access root files so you can access information via its keys <code>file.keys()</code>. In addition, <code>file.classnames()</code> will return the class names of the objects in the file.</p>
+<p>Uproot can access the trees and histograms in the file by using the <code>[]</code> operator:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">tree</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;treeName&quot;</span><span class="p">]</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">hist</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;histName&quot;</span><span class="p">]</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As a shortcut, you can open a file and jump straight to the object by separating the file path and object path with a colon: <code>tree = uproot.open("filename.root:treeName")</code>.</p>
+</div>
+<p>Each bracket is a layer of directory present in the root file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">file</span><span class="p">[</span><span class="err">“</span><span class="n">reco</span><span class="err">”</span><span class="p">][</span><span class="err">“</span><span class="n">jet_pt</span><span class="err">”</span><span class="p">]</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># OR </span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">file</span><span class="p">[</span><span class="n">reco</span><span class="o">/</span><span class="n">jet_eta</span><span class="err">”</span><span class="p">]</span>
+</code></pre></div>
+<p>Uproot can show the contents of histograms, and you can convert edges, values and errors (and more) into their own arrays:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># The lines below will produce python arrays which can be stored for later use</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">file</span><span class="p">[</span><span class="err">“</span><span class="n">histName</span><span class="err">”</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">()</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">file</span><span class="p">[</span><span class="err">“</span><span class="n">histName</span><span class="err">”</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">file</span><span class="p">[</span><span class="err">“</span><span class="n">histName</span><span class="err">”</span><span class="p">]</span><span class="o">.</span><span class="n">errors</span><span class="p">()</span>
+</code></pre></div>
+<p>You can also inspect the contents of trees:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">tree</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;treeName&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">tree</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">tree</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">tree</span><span class="o">.</span><span class="n">typenames</span><span class="p">()</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1"># And more</span>
+</code></pre></div>
+<p>And transform branches intro its default 'Akward' arrays, but you can transform them into numpy or panda arrays to use later on. There is also a lot more functionality neatly explained in their <a href="https://uproot.readthedocs.io/en/stable/basic.html#">docs</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;branchName&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">()</span> <span class="c1"># This will return an awkward array, can alo s</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;branchName&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;np&quot;</span><span class="p">)</span> <span class="c1"># This will return a numpy array</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;branchName&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;pd&quot;</span><span class="p">)</span> <span class="c1"># This will return a pandas array</span>
+</code></pre></div>
 <h2 id="project">Project</h2>
 <p>There are two projects that can be done. The goal here is open-ended and it is a chance for you to put in practice what you have learned and go as far as you want. The level of code expected from you will be of the level of the previous two exercises. </p>
 <h3 id="project-1-weather-report">Project 1: Weather Report</h3>
